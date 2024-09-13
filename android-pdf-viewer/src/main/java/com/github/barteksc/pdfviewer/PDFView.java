@@ -479,9 +479,15 @@ public class PDFView extends RelativeLayout {
         super.onWindowFocusChanged(hasFocus);
         Log.e(TAG, "onWindowFocusChanged");
         if (hasFocus && pdfFile != null) {
+            if (renderingHandlerThread == null) {
+                renderingHandlerThread = new HandlerThread("PDF renderer");
+                renderingHandlerThread.start();
+            }   
             // Forzar una recarga si la vista recupera el foco
-            loadPages();
-            redraw();
+            new Handler().postDelayed(() -> {
+                loadPages();
+                redraw();
+            }, 500);
         }
     }
 
@@ -784,11 +790,15 @@ public class PDFView extends RelativeLayout {
         
         Log.e(TAG, "loadComplete 2");
 
-        if (!renderingHandlerThread.isAlive()) {
-            renderingHandlerThread.start();
+        // if (!renderingHandlerThread.isAlive()) {
+        //     renderingHandlerThread.start();
+        // }
+        if (renderingHandlerThread != null) {
+            if (renderingHandler == null) {
+                renderingHandler = new RenderingHandler(renderingHandlerThread.getLooper(), this);
+                renderingHandler.start();
+            }
         }
-        renderingHandler = new RenderingHandler(renderingHandlerThread.getLooper(), this);
-        renderingHandler.start();
 
         if (scrollHandle != null) {
             scrollHandle.setupLayout(this);
