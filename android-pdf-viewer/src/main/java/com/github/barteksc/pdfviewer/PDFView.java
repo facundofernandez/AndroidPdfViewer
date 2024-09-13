@@ -468,6 +468,9 @@ public class PDFView extends RelativeLayout {
             renderingHandlerThread = new HandlerThread("PDF renderer");
             renderingHandlerThread.start(); 
         }
+        if (renderingHandler == null && renderingHandlerThread != null) {
+            renderingHandler = new RenderingHandler(renderingHandlerThread.getLooper(), this);
+        }
         if (pdfFile != null) {
             loadPages();
             redraw();
@@ -781,14 +784,17 @@ public class PDFView extends RelativeLayout {
         // if (renderingHandlerThread == null) {
         //     return;
         // }
+
+        if (renderingHandlerThread == null) {
+            renderingHandlerThread = new HandlerThread("PDF renderer");
+            renderingHandlerThread.start();
+        }
         
         Log.e(TAG, "loadComplete 2");
 
-        if (!renderingHandlerThread.isAlive()) {
-            renderingHandlerThread.start();
+        if (renderingHandler == null) {
+            renderingHandler = new RenderingHandler(renderingHandlerThread.getLooper(), this);
         }
-        renderingHandler = new RenderingHandler(renderingHandlerThread.getLooper(), this);
-        renderingHandler.start();
 
         if (scrollHandle != null) {
             scrollHandle.setupLayout(this);
