@@ -465,6 +465,7 @@ public class PDFView extends RelativeLayout {
         super.onAttachedToWindow();
         if (renderingHandlerThread == null) {
             renderingHandlerThread = new HandlerThread("PDF renderer");
+            renderingHandlerThread.start(); 
         }
     }
 
@@ -779,6 +780,8 @@ public class PDFView extends RelativeLayout {
         callbacks.callOnLoadComplete(pdfFile.getPagesCount());
 
         jumpTo(defaultPage, false);
+
+        redraw(); 
     }
 
     void loadError(Throwable t) {
