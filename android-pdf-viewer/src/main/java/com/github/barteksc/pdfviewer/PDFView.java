@@ -462,6 +462,7 @@ public class PDFView extends RelativeLayout {
 
     @Override
     protected void onAttachedToWindow() {
+        Log.e(TAG, "onAttachedToWindow");
         super.onAttachedToWindow();
         if (renderingHandlerThread == null) {
             renderingHandlerThread = new HandlerThread("PDF renderer");
@@ -476,6 +477,7 @@ public class PDFView extends RelativeLayout {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
+        Log.e(TAG, "onWindowFocusChanged");
         if (hasFocus && pdfFile != null) {
             // Forzar una recarga si la vista recupera el foco
             loadPages();
@@ -582,6 +584,7 @@ public class PDFView extends RelativeLayout {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        Log.e(TAG, "onDraw");
         if (isInEditMode()) {
             return;
         }
@@ -770,6 +773,7 @@ public class PDFView extends RelativeLayout {
 
     /** Called when the PDF is loaded */
     void loadComplete(PdfFile pdfFile) {
+        Log.e(TAG, "loadComplete");
         state = State.LOADED;
 
         this.pdfFile = pdfFile;
@@ -777,6 +781,8 @@ public class PDFView extends RelativeLayout {
         if (renderingHandlerThread == null) {
             return;
         }
+        
+        Log.e(TAG, "loadComplete 2");
 
         if (!renderingHandlerThread.isAlive()) {
             renderingHandlerThread.start();
@@ -794,6 +800,8 @@ public class PDFView extends RelativeLayout {
         callbacks.callOnLoadComplete(pdfFile.getPagesCount());
 
         jumpTo(defaultPage, false);
+
+        Log.e(TAG, "loadComplete redraw");
 
         redraw(); 
     }
