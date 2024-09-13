@@ -778,9 +778,9 @@ public class PDFView extends RelativeLayout {
 
         this.pdfFile = pdfFile;
 
-        if (renderingHandlerThread == null) {
-            return;
-        }
+        // if (renderingHandlerThread == null) {
+        //     return;
+        // }
         
         Log.e(TAG, "loadComplete 2");
 
