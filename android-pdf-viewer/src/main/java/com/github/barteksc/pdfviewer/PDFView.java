@@ -467,6 +467,20 @@ public class PDFView extends RelativeLayout {
             renderingHandlerThread = new HandlerThread("PDF renderer");
             renderingHandlerThread.start(); 
         }
+        if (pdfFile != null) {
+            loadPages();
+            redraw();
+        }
+    }
+    
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && pdfFile != null) {
+            // Forzar una recarga si la vista recupera el foco
+            loadPages();
+            redraw();
+        }
     }
 
     @Override
