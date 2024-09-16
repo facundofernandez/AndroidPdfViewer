@@ -761,7 +761,7 @@ public class PDFView extends RelativeLayout {
         this.pdfFile = pdfFile;
 
         if (renderingHandlerThread == null) {
-            return;
+            renderingHandlerThread = new HandlerThread("PDF renderer");
         }
 
         Log.e("PDFView", "loadComplete 2");
