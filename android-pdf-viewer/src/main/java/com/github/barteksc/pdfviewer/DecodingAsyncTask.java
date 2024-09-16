@@ -47,9 +47,11 @@ class DecodingAsyncTask extends AsyncTask<Void, Void, Throwable> {
 
     @Override
     protected Throwable doInBackground(Void... params) {
+        Log.e("PDFView", "doInBackground 1");
         try {
             PDFView pdfView = pdfViewReference.get();
             if (pdfView != null) {
+                Log.e("PDFView", "doInBackground 2");
                 PdfDocument pdfDocument = docSource.createDocument(pdfView.getContext(), pdfiumCore, password);
                 pdfFile = new PdfFile(pdfiumCore, pdfDocument, pdfView.getPageFitPolicy(), getViewSize(pdfView),
                         userPages, pdfView.isSwipeVertical(), pdfView.getSpacingPx(), pdfView.isAutoSpacingEnabled(),
@@ -70,13 +72,16 @@ class DecodingAsyncTask extends AsyncTask<Void, Void, Throwable> {
 
     @Override
     protected void onPostExecute(Throwable t) {
+        Log.e("PDFView", "onPostExecute 1");
         PDFView pdfView = pdfViewReference.get();
         if (pdfView != null) {
+            Log.e("PDFView", "onPostExecute 2");
             if (t != null) {
                 pdfView.loadError(t);
                 return;
             }
             if (!cancelled) {
+                Log.e("PDFView", "onPostExecute 3");
                 pdfView.loadComplete(pdfFile);
             }
         }

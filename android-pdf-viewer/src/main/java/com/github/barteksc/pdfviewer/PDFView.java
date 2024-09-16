@@ -755,6 +755,7 @@ public class PDFView extends RelativeLayout {
 
     /** Called when the PDF is loaded */
     void loadComplete(PdfFile pdfFile) {
+        Log.e("PDFView", "loadComplete 1");
         state = State.LOADED;
 
         this.pdfFile = pdfFile;
@@ -763,9 +764,14 @@ public class PDFView extends RelativeLayout {
             return;
         }
 
+        Log.e("PDFView", "loadComplete 2");
+
         if (!renderingHandlerThread.isAlive()) {
             renderingHandlerThread.start();
         }
+
+        Log.e("PDFView", "loadComplete 3");
+
         renderingHandler = new RenderingHandler(renderingHandlerThread.getLooper(), this);
         renderingHandler.start();
 
