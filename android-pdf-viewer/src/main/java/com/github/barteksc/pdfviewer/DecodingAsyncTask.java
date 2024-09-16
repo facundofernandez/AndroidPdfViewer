@@ -22,6 +22,8 @@ import com.shockwave.pdfium.PdfDocument;
 import com.shockwave.pdfium.PdfiumCore;
 import com.shockwave.pdfium.util.Size;
 
+import android.util.Log;
+
 import java.lang.ref.WeakReference;
 
 class DecodingAsyncTask extends AsyncTask<Void, Void, Throwable> {
